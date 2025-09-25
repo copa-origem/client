@@ -5,6 +5,10 @@ function App() {
   const [type, setType] = useState("");
   const navigate = useNavigate();
 
+  const seeMap = async (e) => {
+    navigate('/mapWithProblems')
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -19,7 +23,7 @@ function App() {
 
   return (
     <>
-    <button>Ver mapa</button>
+    <button onClick={seeMap}>Ver mapa</button>
     <form onSubmit={handleSubmit}>
       <select onChange={(e) => setType(e.target.value)}>
         <option value="">Infraestrutura urbana</option>
