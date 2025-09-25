@@ -1,10 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Home from './Home.tsx';
+import MapaAdd from './MapaAdd.tsx';
+import DescriptionAdd from './DescriptionAdd.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />}/>
+        <Route path="/mapaAdd" element={<MapaAdd />}/>
+        <Route path="/descriptionAdd" element={<DescriptionAdd />}/>
+
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>,
 )
