@@ -43,7 +43,7 @@ function DescriptionAdd() {
       const data = await res.json();
       console.log(data);
       alert("Problema enviado!");
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       console.error("Erro ao enviar:", error);
     }

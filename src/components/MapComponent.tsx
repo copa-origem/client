@@ -25,9 +25,6 @@ function MapWithMarker({ onLocationChange }) {
                     setCenter(userLocation);
                     setMarker(userLocation);
                     if (onLocationChange) onLocationChange(userLocation);
-                },
-                (err) => {
-                    alert("Erro ao pegar localização");
                 }
             );
         }
