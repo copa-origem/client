@@ -1,6 +1,5 @@
 import React , { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LoadScript } from '@react-google-maps/api';
 
 import MapWithMarker from "./components/MapComponent";
 
@@ -8,8 +7,6 @@ import MapWithMarker from "./components/MapComponent";
 function MapaAdd() {
     const location = useLocation();
     const type = location.state?.type;
-
-    console.log(type);
 
     const [coords, setCoords] = useState(null);
     const navigate = useNavigate();
