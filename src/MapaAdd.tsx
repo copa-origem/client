@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import MapWithMarker from "./components/MapComponent";
@@ -8,10 +8,10 @@ function MapaAdd() {
     const location = useLocation();
     const type = location.state?.type;
 
-    const [coords, setCoords] = useState(null);
+    const [coords, setCoords] = useState<{ lat: number; lng: number} | null>(null);
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         if (coords == null) {
             alert("Escolha um ponto no mapa!");
             return;

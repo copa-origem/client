@@ -7,11 +7,11 @@ function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const seeMap = async (e) => {
+  const seeMap = async () => {
     navigate('/mapWithProblems')
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (type == "") {
