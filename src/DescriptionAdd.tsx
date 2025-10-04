@@ -1,10 +1,10 @@
-import React , { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
 function DescriptionAdd() {
 
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState<File | null>(null);
     const [description, setDescription] = useState("");
 
     const location = useLocation();
@@ -13,16 +13,23 @@ function DescriptionAdd() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
     try {
-      let base64Image = "";
+      let base64Image: string | undefined;
 
       if (image) {
         // Converte para base64
-        base64Image = await new Promise((resolve, reject) => {
+        base64Image = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(image);
-          reader.onload = () => resolve(reader.result.split(",")[1]); // tira o prefixo "data:image/png;base64,"
+          reader.onload = () => {
+            if (typeof reader.result === "string") {
+              const result = reader.result.split(",")[1];
+              resolve(result);
+            } else {
+              reject(new Error("Erro ao ler o arquivo"));
+            }
+          };
           reader.onerror = (error) => reject(error);
         });
       }
@@ -52,7 +59,12 @@ function DescriptionAdd() {
 
     return (
         <>
-        <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])}/>
+        <input type="file" accept="image/*" 
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          if (e.target.files && e.target.files[0]) {
+            setImage(e.target.files[0]);
+          }
+        }}/>
 
         <div>
             <input

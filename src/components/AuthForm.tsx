@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../firebase.js";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signInWithPopup,
-    getRedirectResult,
     signOut,
     onAuthStateChanged,
-    getIdToken,
-    GoogleAuthProvider
+    GoogleAuthProvider,
 } from "firebase/auth";
+import type { User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 
-function AuthForm({ onUser }) {
+function AuthForm({ onUser }: {onUser?: any}) {
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
 
     const provider = new GoogleAuthProvider();

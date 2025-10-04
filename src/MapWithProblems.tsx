@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from '@react-google-maps/api';
 import { useAuth } from "./hooks/useAuth";
 
@@ -8,9 +8,19 @@ const containerStyle = {
 };
 
 function MapWithProblems() {
+    type Problem = {
+        id: string;
+        lat: number;
+        lng: number;
+        description: string;
+        votes_not_exists: number;
+        type: string;
+        imageUrl?: string;
+    };
+
     const [center, setCenter] = useState({ lat: -12.9714, lng: -38.5014});
-    const [problems, setProblems] = useState([]);
-    const [activeMarker, setActiveMarker] = useState(null);
+    const [problems, setProblems] = useState<Problem[]>([]);
+    const [activeMarker, setActiveMarker] = useState("");
     const { user } = useAuth();
 
 
@@ -36,8 +46,13 @@ function MapWithProblems() {
         fetchProblems();
     }, []);
 
-    const vote = async (id, status) => {
+    const vote = async (id: string, status: string) => {
         try {
+            if (!user) {
+                console.error("Usuário não autenticado");
+                return;
+            }
+
             const token = await user.getIdToken();
 
             const res = await fetch("http://localhost:5000/vote", {
@@ -55,7 +70,7 @@ function MapWithProblems() {
             
             alert(data.message);
         } catch (error) {
-            console.error("Erro: " + error.message);
+            console.error("Erro: " + error);
         }
     }
 
@@ -78,7 +93,7 @@ function MapWithProblems() {
                 {activeMarker === p.id && (
                     <InfoWindow
                         position={{ lat: p.lat, lng: p.lng }}
-                        onCloseClick={() => setActiveMarker(null)}                    
+                        onCloseClick={() => setActiveMarker("")}                    
                     >
                         <div>
                             <>
