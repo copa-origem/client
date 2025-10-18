@@ -33,7 +33,7 @@ function DescriptionAdd() {
           reader.onerror = (error) => reject(error);
         });
       }
-      const res = await fetch("http://localhost:5000/create", {
+      const res = await fetch("https://api-consumo.vercel.app/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
